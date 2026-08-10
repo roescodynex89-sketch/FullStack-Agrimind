@@ -7,6 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url=env("DATABASE_URL")
  
 }
 
@@ -22,6 +23,7 @@ model User {
   crops         Crop[]
   sessions      Session[]
   accounts      Account[]
+  comments      Comment[]
 }
 
 model Session {
@@ -64,8 +66,32 @@ model Verification {
 }
 
 model Crop {
-  id     String @id @default(uuid())
-  name   String
+  id             String   @id @default(uuid())
+  name           String
+  imageUrl       String
+  description    String   @db.Text
+  farmingTips    String   @db.Text
+  commonDiseases String   @db.Text
+  difficulty     String
+  season         String
+  location       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+ comments      Comment[]
   userId String
   user   User   @relation(fields: [userId], references: [id])
+}
+
+
+model Comment {
+  id        String   @id @default(uuid())
+  text      String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cropId    String
+  crop      Crop     @relation(fields: [cropId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }

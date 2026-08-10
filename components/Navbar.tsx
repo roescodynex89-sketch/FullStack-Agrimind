@@ -30,8 +30,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Explore Crops", href: "/crops" },
-    { name: "About", href: "/About" },
-    { name: "Contact", href: "/contact" },
+    
   ];
 
   const dropdownItems = [
