@@ -14,6 +14,10 @@ export async function createCrop(data: CropInput) {
 
   const parsed = cropSchema.safeParse(data);
   if (!parsed.success) {
+// Zod এর আসল এরর মেসেজ দেখাবে
+    console.log("Zod Validation Error:", parsed.error.issues);
+
+
     return { success: false, error: parsed.error.issues[0].message };
   }
 
@@ -28,6 +32,8 @@ export async function createCrop(data: CropInput) {
     revalidatePath("/crops");
     return { success: true, crop };
   } catch (error: any) {
+    // এটি আপনার VS Code Terminal-এ আসল Prisma এরর প্রিন্ট করবে
+    console.error("Prisma Database Error:", error);
     return { success: false, error: "Failed to create crop." };
   }
 }
