@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌾 AgriMind AI
 
-## Getting Started
+An AI-powered agricultural intelligence platform built for Bangladeshi farmers — providing crop information, farming guidance, community discussion, and an AI chat assistant for agricultural queries.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🔐 **Authentication** — Email/password login & registration via BetterAuth
+- 🌱 **Crop Database** — Browse, search, and filter crops by season
+- ➕ **Add Crop Data** — Authenticated users can contribute crop intelligence (farming tips, common diseases, difficulty level, region)
+- 💬 **Discussion Forum** — Comment on crop entries to ask questions or share insights
+
+- 📊 **User Dashboard** — Manage your own crop posts and comments (edit/delete)
+
+## 🛠️ Tech Stack
+
+| Layer          | Technology                       |
+| -------------- | -------------------------------- |
+| Framework      | Next.js (App Router)             |
+| Language       | TypeScript                       |
+| Styling        | Tailwind CSS                     |
+| Animation      | Framer Motion                    |
+| Icons          | React Icons                      |
+| Forms          | React Hook Form + Zod validation |
+| Authentication | Better Auth                      |
+| ORM            | Prisma                           |
+| Database       | PostgreSQL (Neon)                |
+| AI             | Groq SDK (Llama 3.3 70B)         |
+
+## 📁 Project Structure
+
 ```
+agrimind/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/page.tsx
+│   │   └── register/page.tsx
+│   ├── actions/
+│   │   ├── crop.ts          # Server actions: create, read, update, delete crops
+│   │   └── comment.ts       # Server actions: create, read, update, delete comments
+│   ├── api/
+│   │   └── auth/[...all]/route.ts   # Better Auth handler
+│   ├── crops/
+│   │   ├── page.tsx         # Crop explore/listing page
+│   │   └── [id]/page.tsx    # Crop details + comments
+│   ├── add-crops/page.tsx   # Add new crop form
+│   ├── dashboard/page.tsx   # User's crops & comments management
+│   ├── lib/
+│   │   ├── auth.ts          # Better Auth server config
+│   │   ├── auth-client.ts   # Better Auth client instance
+│   │   ├── prisma.ts        # Prisma client singleton
+│   │   └── validations/
+│   │       ├── auth.ts      # Zod schemas: login, register
+│   │       └── crop.ts      # Zod schema: crop form
+│   └── components/
+│       ├── Navbar.tsx
+│       ├── Footer.jsx
+│       ├── Hero.tsx
+│       └── HomeCrops.tsx
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+├── generated/
+│   └── prisma/               # Generated Prisma Client
+├── prisma.config.ts
+└── .env
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📜 Key Commands Reference
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Purpose |
+|---|---|
+| `npx prisma generate` | Regenerate Prisma Client after schema changes |
+| `npx prisma migrate dev --name <name>` | Create & apply a new migration |
+| `npx prisma migrate status` | Check if migrations are applied |
+| `npx prisma studio` | Open visual database browser |
+| `npm run dev` | Start development server |
 
-## Learn More
+## ⚠️ Version Notes
 
-To learn more about Next.js, take a look at the following resources:
+- Uses **Prisma 6.x** (not 7.x) for stability with Better Auth's Prisma adapter
+- Generator provider must remain `prisma-client-js` (not the newer `prisma-client` unified generator)
+- If switching Prisma major versions, always delete the `generated/prisma` folder and `.next` cache before regenerating
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
